@@ -3,12 +3,15 @@
 # Author: xianjinru<xianjinru@meizu.com>
 # Created on 2018-10-20 17:25
 
+from pandas import DataFrame
+from tabulate import tabulate
+
 from utils import *
 
-set_off_date = '2018-12-01'
+date = '2018-12-01'
 
 
-def force_transfer(set_off_date, from_station, to_station, from_time, to_time):
+def force_transfer(set_off_date, from_station, to_station, from_time, to_time, no_more_than, print_res=True):
     gzn_szb_timetable = get_net_schedule(set_off_date, from_station, 'IOQ')
     szb_xjl_timetable = get_net_schedule(set_off_date, 'IOQ', to_station)
 
@@ -25,7 +28,7 @@ def force_transfer(set_off_date, from_station, to_station, from_time, to_time):
 
             if cal_interval_secs(datetime2_start, datetime1_end) / 60 < 10:
                 continue
-            if cal_interval_secs(datetime2_end, datetime1_start) / 60 > 120:
+            if cal_interval_secs(datetime2_end, datetime1_start) / 60 > no_more_than:
                 continue
             if datetime1_start <= set_off_date + ' %d:00:00' % from_time:
                 continue
@@ -45,16 +48,24 @@ def force_transfer(set_off_date, from_station, to_station, from_time, to_time):
     result = sorted(result, key=lambda s: s['start_time1'])
     result = sorted(result, key=lambda s: s['cost_time'])
 
-    print('%-6s\t%-6s\t%s\t%s\t%s\t%s\t%s' % (
-        '车次1', '车次2', '开车时间1', '到达时间1', '开车时间2', '到达时间2', '耗时'))
-    for project in result:
-        print('%-6s\t%-6s\t%s\t%s\t%s\t%s\t%s' % (
-            project['number1'], project['number2'], project['start_time1'], project['end_time1'],
-            project['start_time2'],
-            project['end_time2'], project['cost_time']))
+    if not print_res:
+        return result
+    result_list = [x.values() for x in result]
+
+    df = DataFrame(result_list)
+
+    headers = ['Train1', 'Train2', 'Train1 Depart', 'Train1 Arrive', 'Train2 Depart',
+               'Train2 Arrive', 'Cost Time(min)']
+    print(tabulate(df, headers=headers, tablefmt='fancy_grid', showindex=False))
+    return result
 
 
-force_transfer(set_off_date, 'IZQ', 'XJA', 10, 12)
+print()
+print(u'广州南->香港西九龙', end='\n\n')
+force_transfer(set_off_date=date, from_station='IZQ',
+               to_station='XJA', from_time=10, no_more_than=90, to_time=12)
 
-
-force_transfer(set_off_date, 'XJA', 'IZQ', 20, 22)
+print()
+print(u'香港西九龙->广州南', end='\n\n')
+force_transfer(set_off_date=date, from_station='XJA',
+               to_station='IZQ', from_time=20, no_more_than=90, to_time=22)
