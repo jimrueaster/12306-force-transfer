@@ -3,6 +3,8 @@
 # Author: xianjinru<xianjinru@meizu.com>
 # Created on 2018-10-20 17:25
 
+import time
+
 from pandas import DataFrame
 from tabulate import tabulate
 
@@ -12,6 +14,28 @@ date = '2018-12-01'
 
 
 def force_transfer(set_off_date, from_station, to_station, from_time, to_time, no_more_than, print_res=True):
+    '''
+    main function
+    :param string set_off_date: 'yyyy-mm-dd'
+    :param string from_station: 12306 code
+    :param string to_station: 12306 code
+    :param int from_time: hh
+    :param int to_time: hh
+    :param int no_more_than: mins
+    :param bool print_res:
+    :return:
+    '''
+
+    try:
+        _set_off = time.mktime(datetime.strptime(set_off_date, "%Y-%m-%d").timetuple())
+        _now = time.time()
+
+        if _set_off < _now:
+            raise Exception('Date error')
+    except Exception as e:
+        print('Exception occurred, value:', e)
+        return
+
     gzn_szb_timetable = get_net_schedule(set_off_date, from_station, 'IOQ')
     szb_xjl_timetable = get_net_schedule(set_off_date, 'IOQ', to_station)
 
