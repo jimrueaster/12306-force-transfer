@@ -10,14 +10,16 @@ from tabulate import tabulate
 
 from utils import *
 
-date = '2018-12-01'
+date = '2018-12-27'
 
 
-def force_transfer(set_off_date, from_station, to_station, from_time, to_time, no_more_than, print_res=True):
+def force_transfer(set_off_date, from_station, transfer_station, to_station, from_time, to_time, no_more_than,
+                   print_res=True):
     '''
     main function
     :param string set_off_date: 'yyyy-mm-dd'
     :param string from_station: 12306 code
+    :param string transfer_station: 12306 code
     :param string to_station: 12306 code
     :param int from_time: hh
     :param int to_time: hh
@@ -36,15 +38,15 @@ def force_transfer(set_off_date, from_station, to_station, from_time, to_time, n
         print('Exception occurred, value:', e)
         return
 
-    gzn_szb_timetable = get_net_schedule(set_off_date, from_station, 'IOQ')
-    szb_xjl_timetable = get_net_schedule(set_off_date, 'IOQ', to_station)
+    fr_tsf_timetable = get_net_schedule(set_off_date, from_station, transfer_station)
+    tsf_to_timetable = get_net_schedule(set_off_date, transfer_station, to_station)
 
-    gzn_szb_simple_schedule = get_key_schedule(gzn_szb_timetable, from_station, 'IOQ')
-    szb_xjl_simple_schedule = get_key_schedule(szb_xjl_timetable, 'IOQ', to_station)
+    fr_tsf_simple_schedule = get_key_schedule(fr_tsf_timetable, from_station, transfer_station)
+    tsf_to_simple_schedule = get_key_schedule(tsf_to_timetable, transfer_station, to_station)
 
     result = []
-    for train1 in gzn_szb_simple_schedule:
-        for train2 in szb_xjl_simple_schedule:
+    for train1 in fr_tsf_simple_schedule:
+        for train2 in tsf_to_simple_schedule:
             datetime1_start = set_off_date + ' ' + train1['start_time'] + ':00'
             datetime1_end = set_off_date + ' ' + train1['end_time'] + ':00'
             datetime2_start = set_off_date + ' ' + train2['start_time'] + ':00'
@@ -86,10 +88,10 @@ def force_transfer(set_off_date, from_station, to_station, from_time, to_time, n
 
 print()
 print(u'广州南->香港西九龙', end='\n\n')
-force_transfer(set_off_date=date, from_station='IZQ',
+force_transfer(set_off_date=date, from_station='IZQ', transfer_station='IOQ',
                to_station='XJA', from_time=10, no_more_than=90, to_time=12)
 
 print()
 print(u'香港西九龙->广州南', end='\n\n')
-force_transfer(set_off_date=date, from_station='XJA',
+force_transfer(set_off_date=date, from_station='XJA', transfer_station='IOQ',
                to_station='IZQ', from_time=20, no_more_than=90, to_time=22)
