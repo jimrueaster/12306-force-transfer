@@ -10,7 +10,7 @@ from tabulate import tabulate
 
 from utils import *
 
-date = '2018-12-27'
+date = '2019-01-16'
 
 
 def force_transfer(set_off_date, from_station, transfer_station, to_station, from_time, to_time, no_more_than,
@@ -55,10 +55,13 @@ def force_transfer(set_off_date, from_station, transfer_station, to_station, fro
             if cal_interval_secs(datetime2_start, datetime1_end) / 60 < 10:
                 continue
             if cal_interval_secs(datetime2_end, datetime1_start) / 60 > no_more_than:
+                # if this set off time make the trip longer than the limit time,
+                # then this loop can directly break 
+                # because the time will longer than current result
+                break
+            if datetime1_start <= set_off_date + ' %02d:00:00' % from_time:
                 continue
-            if datetime1_start <= set_off_date + ' %d:00:00' % from_time:
-                continue
-            if datetime2_end >= set_off_date + ' %d:00:00' % to_time:
+            if datetime2_end >= set_off_date + ' %02d:00:00' % to_time:
                 continue
             _res = {
                 'number1': train1['number'],
