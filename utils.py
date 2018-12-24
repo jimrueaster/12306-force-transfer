@@ -41,7 +41,7 @@ def get_key_schedule(origin_data, start_station, end_station):
     schedule = []
     for _train in origin_data:
         ft = _train.split('|')
-        if 'G' != ft[3][0]:
+        if 'G' != ft[3][0] and 'C'!= ft[3][0]:
             # skip if not High Speed Railway
             continue
         if ft[6] != start_station or ft[7] != end_station:
@@ -51,11 +51,13 @@ def get_key_schedule(origin_data, start_station, end_station):
             # skip error time record
             continue
 
+        _cost_hour, _cost_min = map(int, ft[10].split(':'))
+
         _key_data = {
             'number': ft[3],
             'start_time': ft[8],
             'end_time': ft[9],
-            'cost_time': ft[10].split(':')[1]
+            'cost_time': _cost_hour * 60 + _cost_min
         }
         schedule.append(_key_data)
     return schedule
