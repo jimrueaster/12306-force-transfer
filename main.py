@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 # -*- coding:utf-8 -*-
-# Author: xianjinru<xianjinru@meizu.com>
+# Author: Jimru Easter<295140325@qq.com>
 # Created on 2018-10-20 17:25
 
 import time
