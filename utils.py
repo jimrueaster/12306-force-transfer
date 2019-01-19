@@ -22,7 +22,7 @@ def get_net_schedule(date, start_station, end_station):
                'leftTicketDTO.from_station': start_station,
                'leftTicketDTO.to_station': end_station,
                'purpose_codes': 'ADULT'}
-    url = 'https://kyfw.12306.cn/otn/leftTicket/queryX'
+    url = 'https://kyfw.12306.cn/otn/leftTicket/queryZ'
     r = requests.get(url, params=payload)
     r.encoding = 'utf-8'
     _obj = json.loads(r.text)
