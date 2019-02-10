@@ -51,8 +51,10 @@ def force_transfer(set_off_date, from_station, transfer_station, to_station, fro
             datetime1_end = set_off_date + ' ' + train1['end_time'] + ':00'
             datetime2_start = set_off_date + ' ' + train2['start_time'] + ':00'
             datetime2_end = set_off_date + ' ' + train2['end_time'] + ':00'
+            boarding_interval = calc_boarding_interval(datetime2_start)
+            _boarding_interval_start = set_off_date + ' ' + boarding_interval['start'] + ':00'
 
-            if cal_interval_secs(datetime2_start, datetime1_end) / 60 < 10:
+            if cal_interval_secs(_boarding_interval_start, datetime1_end) / 60 <= 5:
                 continue
             if cal_interval_secs(datetime2_end, datetime1_start) / 60 > no_more_than:
                 # if this set off time make the trip longer than the limit time,
@@ -64,7 +66,6 @@ def force_transfer(set_off_date, from_station, transfer_station, to_station, fro
             if datetime2_end >= set_off_date + ' %02d:00:00' % to_time:
                 continue
 
-            boarding_interval = calc_boarding_interval(datetime2_start)
             _res = {
                 'number1': train1['number'],
                 'number2': train2['number'],
