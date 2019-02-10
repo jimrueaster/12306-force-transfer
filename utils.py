@@ -5,6 +5,7 @@
 
 import json
 from datetime import datetime
+from datetime import timedelta
 
 import requests
 
@@ -75,3 +76,17 @@ def cal_interval_secs(t1, t2):
     interval = time_tuple1 - time_tuple2
     sec = interval.days * 24 * 3600 + interval.seconds
     return sec
+
+
+def calc_boarding_interval(depart_time):
+    '''
+    计算乘车间隔
+    :param depart_time: 出发时间
+    :return: dict
+    '''
+    start_boarding = (datetime.strptime(depart_time, '%Y-%m-%d %H:%M:%S') - timedelta(minutes=15)).strftime('%H:%M')
+    end_boarding = (datetime.strptime(depart_time, '%Y-%m-%d %H:%M:%S') - timedelta(minutes=5)).strftime('%H:%M')
+    return {
+        'start': start_boarding,
+        'end': end_boarding
+    }

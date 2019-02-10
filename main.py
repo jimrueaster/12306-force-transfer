@@ -63,11 +63,14 @@ def force_transfer(set_off_date, from_station, transfer_station, to_station, fro
                 continue
             if datetime2_end >= set_off_date + ' %02d:00:00' % to_time:
                 continue
+
+            boarding_interval = calc_boarding_interval(datetime2_start)
             _res = {
                 'number1': train1['number'],
                 'number2': train2['number'],
                 'start_time1': train1['start_time'],
                 'end_time1': train1['end_time'],
+                'boarding_interval': '%s-%s' % (boarding_interval['start'], boarding_interval['end']),
                 'start_time2': train2['start_time'],
                 'end_time2': train2['end_time'],
                 'cost_time': cal_interval_secs(datetime2_end, datetime1_start) / 60
@@ -83,7 +86,7 @@ def force_transfer(set_off_date, from_station, transfer_station, to_station, fro
 
     df = DataFrame(result_list)
 
-    headers = ['Train1', 'Train2', 'Train1 Depart', 'Train1 Arrive', 'Train2 Depart',
+    headers = ['Train1', 'Train2', 'Train1 Depart', 'Train1 Arrive', 'Boarding', 'Train2 Depart',
                'Train2 Arrive', 'Cost Time(min)']
     print(tabulate(df, headers=headers, tablefmt='fancy_grid', showindex=False))
     return result
