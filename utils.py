@@ -3,9 +3,8 @@
 # Author: Jimru Easter<295140325@qq.com>
 # Created on 2018-10-20 17:19
 
+import datetime as dt
 import json
-from datetime import datetime
-from datetime import timedelta
 
 import requests
 
@@ -71,8 +70,8 @@ def cal_interval_secs(t1, t2):
     :param t2: time2
     :return: int
     '''
-    time_tuple1 = datetime.strptime(t1, '%Y-%m-%d %H:%M:%S')
-    time_tuple2 = datetime.strptime(t2, '%Y-%m-%d %H:%M:%S')
+    time_tuple1 = dt.datetime.strptime(t1, '%Y-%m-%d %H:%M:%S')
+    time_tuple2 = dt.datetime.strptime(t2, '%Y-%m-%d %H:%M:%S')
     interval = time_tuple1 - time_tuple2
     sec = interval.days * 24 * 3600 + interval.seconds
     return sec
@@ -84,8 +83,8 @@ def calc_boarding_interval(depart_time):
     :param depart_time: 出发时间
     :return: dict
     '''
-    start_boarding = (datetime.strptime(depart_time, '%Y-%m-%d %H:%M:%S') - timedelta(minutes=15)).strftime('%H:%M')
-    end_boarding = (datetime.strptime(depart_time, '%Y-%m-%d %H:%M:%S') - timedelta(minutes=5)).strftime('%H:%M')
+    start_boarding = (dt.datetime.strptime(depart_time, '%Y-%m-%d %H:%M:%S') - timedelta(minutes=15)).strftime('%H:%M')
+    end_boarding = (dt.datetime.strptime(depart_time, '%Y-%m-%d %H:%M:%S') - timedelta(minutes=5)).strftime('%H:%M')
     return {
         'start': start_boarding,
         'end': end_boarding
