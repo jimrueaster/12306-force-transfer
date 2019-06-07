@@ -130,8 +130,8 @@ def calc_boarding_interval(depart_time):
     :param depart_time: 出发时间
     :return: dict
     '''
-    start_boarding = (dt.datetime.strptime(depart_time, '%Y-%m-%d %H:%M:%S') - timedelta(minutes=15)).strftime('%H:%M')
-    end_boarding = (dt.datetime.strptime(depart_time, '%Y-%m-%d %H:%M:%S') - timedelta(minutes=5)).strftime('%H:%M')
+    start_boarding = (dt.datetime.strptime(depart_time, '%Y-%m-%d %H:%M:%S') - dt.timedelta(minutes=15)).strftime('%H:%M')
+    end_boarding = (dt.datetime.strptime(depart_time, '%Y-%m-%d %H:%M:%S') - dt.timedelta(minutes=5)).strftime('%H:%M')
     return {
         'start': start_boarding,
         'end': end_boarding
