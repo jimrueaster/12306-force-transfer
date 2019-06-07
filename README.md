@@ -12,7 +12,7 @@
 > 获取库
 
 ```
-git clone https://github.com/jimrueaster/12306-force-transfer.git
+git clone https://github.com/jimrueaster/12306-smart-transfer.git
 ```
 
 > 修改 main.py 的 `date`
