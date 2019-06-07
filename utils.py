@@ -11,11 +11,11 @@ import requests
 
 
 def validate_date(date_str):
-    '''
+    """
     验证日期
     :param date_str: 日期字符串
     :return: void
-    '''
+    """
     try:
         dt.datetime.strptime(date_str, '%Y-%m-%d')
     except ValueError:
@@ -23,12 +23,12 @@ def validate_date(date_str):
 
 
 def compare_date(date1, date2):
-    '''
+    """
     比较两个日期
     :param date1: 日期1
     :param date2: 日期2
     :return: int
-    '''
+    """
     validate_date(date1)
     validate_date(date2)
 
@@ -44,11 +44,11 @@ def compare_date(date1, date2):
 
 
 def validate_set_off_date(set_off_date):
-    '''
+    """
     验证出发日期
     :param set_off_date: 出发日期(YYYY-mm-dd)
     :return: void
-    '''
+    """
     today = dt.date.today().strftime('%Y-%m-%d')
     res = compare_date(set_off_date, today)
 
@@ -57,13 +57,13 @@ def validate_set_off_date(set_off_date):
 
 
 def get_net_schedule(date, start_station, end_station):
-    '''
+    """
     Get Schedule from the Internet
     :param date: the date to set off
     :param start_station: the set off station
     :param end_station: the arrival station
     :return: list
-    '''
+    """
 
     payload = {'leftTicketDTO.train_date': date,
                'leftTicketDTO.from_station': start_station,
@@ -78,13 +78,13 @@ def get_net_schedule(date, start_station, end_station):
 
 
 def get_key_schedule(origin_data, start_station, end_station):
-    '''
+    """
     Get the interesting
     :param origin_data: original result from 12306 website
     :param start_station: Departure station, see the "Station List"
     :param end_station: Arrival station, see the "Station List"
     :return: dict
-    '''
+    """
     schedule = []
     for _train in origin_data:
         ft = _train.split('|')
@@ -111,12 +111,12 @@ def get_key_schedule(origin_data, start_station, end_station):
 
 
 def cal_interval_secs(t1, t2):
-    '''
+    """
     (time1 - time2) and returns sec
     :param t1: time1
     :param t2: time2
     :return: int
-    '''
+    """
     time_tuple1 = dt.datetime.strptime(t1, '%Y-%m-%d %H:%M:%S')
     time_tuple2 = dt.datetime.strptime(t2, '%Y-%m-%d %H:%M:%S')
     interval = time_tuple1 - time_tuple2
@@ -125,11 +125,11 @@ def cal_interval_secs(t1, t2):
 
 
 def calc_boarding_interval(depart_time):
-    '''
+    """
     计算乘车间隔
     :param depart_time: 出发时间
     :return: dict
-    '''
+    """
     start_boarding = (dt.datetime.strptime(depart_time, '%Y-%m-%d %H:%M:%S') - dt.timedelta(minutes=15)).strftime('%H:%M')
     end_boarding = (dt.datetime.strptime(depart_time, '%Y-%m-%d %H:%M:%S') - dt.timedelta(minutes=5)).strftime('%H:%M')
     return {

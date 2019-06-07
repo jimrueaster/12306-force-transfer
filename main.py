@@ -13,7 +13,7 @@ date = '2019-01-16'
 
 def force_transfer(set_off_date, from_station, transfer_station, to_station, from_time, to_time, no_more_than,
                    print_res=True):
-    '''
+    """
     main function
     :param string set_off_date: 'yyyy-mm-dd'
     :param string from_station: 12306 code
@@ -24,7 +24,7 @@ def force_transfer(set_off_date, from_station, transfer_station, to_station, fro
     :param int no_more_than: mins
     :param bool print_res:
     :return:
-    '''
+    """
 
     validate_set_off_date(set_off_date)
 
