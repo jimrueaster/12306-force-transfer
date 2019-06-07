@@ -3,8 +3,6 @@
 # Author: Jimru Easter<295140325@qq.com>
 # Created on 2018-10-20 17:25
 
-import time
-
 from pandas import DataFrame
 from tabulate import tabulate
 
@@ -28,15 +26,7 @@ def force_transfer(set_off_date, from_station, transfer_station, to_station, fro
     :return:
     '''
 
-    try:
-        _set_off = time.mktime(datetime.strptime(set_off_date, "%Y-%m-%d").timetuple())
-        _now = time.time()
-
-        if _set_off < _now:
-            raise Exception('Date error')
-    except Exception as e:
-        print('Exception occurred, value:', e)
-        return
+    validate_set_off_date(set_off_date)
 
     fr_tsf_timetable = get_net_schedule(set_off_date, from_station, transfer_station)
     tsf_to_timetable = get_net_schedule(set_off_date, transfer_station, to_station)

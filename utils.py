@@ -3,10 +3,57 @@
 # Author: Jimru Easter<295140325@qq.com>
 # Created on 2018-10-20 17:19
 
-import datetime as dt
 import json
+import time
+import datetime as dt
 
 import requests
+
+
+def validate_date(date_str):
+    '''
+    验证日期
+    :param date_str: 日期字符串
+    :return: void
+    '''
+    try:
+        dt.datetime.strptime(date_str, '%Y-%m-%d')
+    except ValueError:
+        raise ValueError("Incorrect data format, should be YYYY-mm-d")
+
+
+def compare_date(date1, date2):
+    '''
+    比较两个日期
+    :param date1: 日期1
+    :param date2: 日期2
+    :return: int
+    '''
+    validate_date(date1)
+    validate_date(date2)
+
+    t1 = time.strptime(date1, "%Y-%m-%d")
+    t2 = time.strptime(date2, "%Y-%m-%d")
+
+    if t1 < t2:
+        return -1
+    if t1 == t2:
+        return 0
+    if t1 > t2:
+        return 1
+
+
+def validate_set_off_date(set_off_date):
+    '''
+    验证出发日期
+    :param set_off_date: 出发日期(YYYY-mm-dd)
+    :return: void
+    '''
+    today = dt.date.today().strftime('%Y-%m-%d')
+    res = compare_date(set_off_date, today)
+
+    if res <= 0:
+        raise ValueError('Date should be later than today.')
 
 
 def get_net_schedule(date, start_station, end_station):

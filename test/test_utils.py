@@ -19,6 +19,13 @@ class TestUtils(unittest.TestCase):
                                                '2019-05-09 12:00:00')
         self.assertEqual(interval_sec, -3600)
 
+    def test_compare_date(self):
+        ret = compare_date('2019-05-08', '2019-05-09')
+        self.assertEqual(ret, -1)
+        ret = compare_date('2019-05-09', '2019-05-09')
+        self.assertEqual(ret, 0)
+        ret = compare_date('2019-05-10', '2019-05-09')
+        self.assertEqual(ret, 1)
 
 if __name__ == '__main__':
     unittest.main()
