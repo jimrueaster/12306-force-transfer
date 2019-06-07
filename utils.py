@@ -3,9 +3,9 @@
 # Author: Jimru Easter<295140325@qq.com>
 # Created on 2018-10-20 17:19
 
+import datetime as dt
 import json
 import time
-import datetime as dt
 
 import requests
 
@@ -88,7 +88,7 @@ def get_key_schedule(origin_data, start_station, end_station):
     schedule = []
     for _train in origin_data:
         ft = _train.split('|')
-        if 'G' != ft[3][0] and 'C'!= ft[3][0]:
+        if 'G' != ft[3][0] and 'C' != ft[3][0]:
             # skip if not High Speed Railway
             continue
         if ft[6] != start_station or ft[7] != end_station:
@@ -130,7 +130,8 @@ def calc_boarding_interval(depart_time):
     :param depart_time: 出发时间
     :return: dict
     """
-    start_boarding = (dt.datetime.strptime(depart_time, '%Y-%m-%d %H:%M:%S') - dt.timedelta(minutes=15)).strftime('%H:%M')
+    start_boarding = (dt.datetime.strptime(depart_time, '%Y-%m-%d %H:%M:%S') - dt.timedelta(minutes=15)).strftime(
+        '%H:%M')
     end_boarding = (dt.datetime.strptime(depart_time, '%Y-%m-%d %H:%M:%S') - dt.timedelta(minutes=5)).strftime('%H:%M')
     return {
         'start': start_boarding,
