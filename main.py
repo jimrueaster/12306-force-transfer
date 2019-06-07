@@ -28,11 +28,8 @@ def force_transfer(set_off_date, from_station, transfer_station, to_station, fro
 
     validate_set_off_date(set_off_date)
 
-    fr_tsf_timetable = get_net_schedule(set_off_date, from_station, transfer_station)
-    tsf_to_timetable = get_net_schedule(set_off_date, transfer_station, to_station)
-
-    fr_tsf_simple_schedule = get_key_schedule(fr_tsf_timetable, from_station, transfer_station)
-    tsf_to_simple_schedule = get_key_schedule(tsf_to_timetable, transfer_station, to_station)
+    fr_tsf_simple_schedule = get_train_schedule(set_off_date, from_station, transfer_station)
+    tsf_to_simple_schedule = get_train_schedule(set_off_date, transfer_station, to_station)
 
     result = []
     for train1 in fr_tsf_simple_schedule:

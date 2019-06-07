@@ -56,7 +56,7 @@ def validate_set_off_date(set_off_date):
         raise ValueError('Date should be later than today.')
 
 
-def get_net_schedule(date, start_station, end_station):
+def get_raw_schedule(date, start_station, end_station):
     """
     Get Schedule from the Internet
     :param date: the date to set off
@@ -77,17 +77,20 @@ def get_net_schedule(date, start_station, end_station):
     return _obj['data']['result']
 
 
-def get_key_schedule(origin_data, start_station, end_station):
+def get_train_schedule(date, start_station, end_station):
     """
-    Get the interesting
-    :param origin_data: original result from 12306 website
+    获取火车时刻表
+    :param date: the date to set off
     :param start_station: Departure station, see the "Station List"
     :param end_station: Arrival station, see the "Station List"
     :return: dict
     """
+    raw_schedule = get_raw_schedule(date, start_station, end_station)
+
     schedule = []
-    for _train in origin_data:
+    for _train in raw_schedule:
         ft = _train.split('|')
+        # todo 实现独立的筛选规则,作为依赖注入,以便定制"跳过不想要的班次"
         if 'G' != ft[3][0] and 'C' != ft[3][0]:
             # skip if not High Speed Railway
             continue
