@@ -5,9 +5,10 @@
 
 import datetime as dt
 import json
-import time
 
 import requests
+
+import JRUtils.simple_time as jst
 
 
 def validate_date(date_str):
@@ -22,35 +23,16 @@ def validate_date(date_str):
         raise ValueError("Incorrect data format, should be YYYY-mm-d")
 
 
-def compare_date(date1, date2):
-    """
-    比较两个日期
-    :param date1: 日期1
-    :param date2: 日期2
-    :return: int
-    """
-    validate_date(date1)
-    validate_date(date2)
-
-    t1 = time.strptime(date1, "%Y-%m-%d")
-    t2 = time.strptime(date2, "%Y-%m-%d")
-
-    if t1 < t2:
-        return -1
-    if t1 == t2:
-        return 0
-    if t1 > t2:
-        return 1
-
-
 def validate_set_off_date(set_off_date):
     """
     验证出发日期
     :param set_off_date: 出发日期(YYYY-mm-dd)
     :return: void
     """
-    today = dt.date.today().strftime('%Y-%m-%d')
-    res = compare_date(set_off_date, today)
+
+    fmt = '%Y-%m-%d'
+    today = dt.date.today().strftime(fmt)
+    res = jst.compare_datetime(set_off_date, fmt, today, fmt)
 
     if res <= 0:
         raise ValueError('Date should be later than today.')
