@@ -11,18 +11,6 @@ import requests
 import JRUtils.simple_time as jst
 
 
-def validate_date(date_str):
-    """
-    验证日期
-    :param date_str: 日期字符串
-    :return: void
-    """
-    try:
-        dt.datetime.strptime(date_str, '%Y-%m-%d')
-    except ValueError:
-        raise ValueError("Incorrect data format, should be YYYY-mm-d")
-
-
 def validate_set_off_date(set_off_date):
     """
     验证出发日期
