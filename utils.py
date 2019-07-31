@@ -43,30 +43,28 @@ def get_raw_schedule(d_train_info):
     return result['data']['result']
 
 
-def get_train_schedule(date, start_station, end_station):
+def get_train_schedule(d_train_info):
     """
     获取火车时刻表
-    :param date: the date to set off
-    :param start_station: Departure station, see the "Station List"
-    :param end_station: Arrival station, see the "Station List"
-    :return: dict
+    :param d_train_info: 火车信息
+    :return: list
     """
     raw_schedule = get_raw_schedule(
         {
-            'train_date': date,
-            'from_station': start_station,
-            'to_station': end_station
+            'train_date': d_train_info['train_date'],
+            'from_station': d_train_info['from_station'],
+            'to_station': d_train_info['to_station'],
         }
     )
 
     schedule = []
-    for _train in raw_schedule:
-        ft = _train.split('|')
+    for train in raw_schedule:
+        ft = train.split('|')
         # todo 实现独立的筛选规则,作为依赖注入,以便定制"跳过不想要的班次"
         if 'G' != ft[3][0] and 'C' != ft[3][0]:
             # skip if not High Speed Railway
             continue
-        if ft[6] != start_station or ft[7] != end_station:
+        if ft[6] != d_train_info['from_station'] or ft[7] != d_train_info['to_station']:
             # skip if start station or end station doesn't match
             continue
         if ft[9] == '24:00':
