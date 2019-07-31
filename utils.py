@@ -70,24 +70,24 @@ def clean_raw_schedule(l_raw_schedule, d_train_info):
     """
     result = []
     for train in l_raw_schedule:
-        ft = train.split('|')
+        l_train = train.split('|')
         # todo 实现独立的筛选规则,作为依赖注入,以便定制"跳过不想要的班次"
-        if 'G' != ft[3][0] and 'C' != ft[3][0]:
+        if 'G' != l_train[3][0] and 'C' != l_train[3][0]:
             # skip if not High Speed Railway
             continue
-        if ft[6] != d_train_info['from_station'] or ft[7] != d_train_info['to_station']:
+        if l_train[6] != d_train_info['from_station'] or l_train[7] != d_train_info['to_station']:
             # skip if start station or end station doesn't match
             continue
-        if ft[9] == '24:00':
+        if l_train[9] == '24:00':
             # skip error time record
             continue
 
-        _cost_hour, _cost_min = map(int, ft[10].split(':'))
+        _cost_hour, _cost_min = map(int, l_train[10].split(':'))
 
         result.append({
-            'number': ft[3],
-            'start_time': ft[8],
-            'end_time': ft[9],
+            'number': l_train[3],
+            'start_time': l_train[8],
+            'end_time': l_train[9],
             'cost_time': _cost_hour * 60 + _cost_min
         })
 
