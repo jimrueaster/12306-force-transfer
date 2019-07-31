@@ -57,8 +57,19 @@ def get_train_schedule(d_train_info):
         }
     )
 
-    schedule = []
-    for train in raw_schedule:
+    schedule = clean_raw_schedule(raw_schedule, d_train_info)
+    return schedule
+
+
+def clean_raw_schedule(l_raw_schedule, d_train_info):
+    """
+    清洗班次原始数据
+    :param l_raw_schedule: 原始班次
+    :param d_train_info: 火车信息
+    :return: list
+    """
+    result = []
+    for train in l_raw_schedule:
         ft = train.split('|')
         # todo 实现独立的筛选规则,作为依赖注入,以便定制"跳过不想要的班次"
         if 'G' != ft[3][0] and 'C' != ft[3][0]:
@@ -79,8 +90,9 @@ def get_train_schedule(d_train_info):
             'end_time': ft[9],
             'cost_time': _cost_hour * 60 + _cost_min
         }
-        schedule.append(_key_data)
-    return schedule
+        result.append(_key_data)
+
+    return result
 
 
 def cal_interval_secs(t1, t2):
