@@ -84,13 +84,12 @@ def clean_raw_schedule(l_raw_schedule, d_train_info):
 
         _cost_hour, _cost_min = map(int, ft[10].split(':'))
 
-        _key_data = {
+        result.append({
             'number': ft[3],
             'start_time': ft[8],
             'end_time': ft[9],
             'cost_time': _cost_hour * 60 + _cost_min
-        }
-        result.append(_key_data)
+        })
 
     return result
 
