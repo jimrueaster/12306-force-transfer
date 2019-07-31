@@ -79,6 +79,16 @@ def __train_take_minutes(l_train):
     return int(l_train[10].split(':')[1])
 
 
+def __is_specified_station(l_train, d_train_info):
+    """
+    skip if start station or end station doesn't match
+    :param l_train: 某一班次火车的信息
+    :param d_train_info: 火车信息
+    :return:
+    """
+    return l_train[6] != d_train_info['from_station'] or l_train[7] != d_train_info['to_station']
+
+
 def clean_raw_schedule(l_raw_schedule, d_train_info):
     """
     清洗班次原始数据
@@ -93,8 +103,7 @@ def clean_raw_schedule(l_raw_schedule, d_train_info):
         if 'G' != l_train[3][0] and 'C' != l_train[3][0]:
             # skip if not High Speed Railway
             continue
-        if l_train[6] != d_train_info['from_station'] or l_train[7] != d_train_info['to_station']:
-            # skip if start station or end station doesn't match
+        if __is_specified_station(l_train, d_train_info):
             continue
         if l_train[9] == '24:00':
             # skip error time record
