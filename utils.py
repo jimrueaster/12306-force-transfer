@@ -30,7 +30,7 @@ def get_raw_schedule(d_train_info):
     """
     Get Schedule from the Internet
     :param d_train_info: 火车信息
-    :return: json
+    :return: list
     """
     payload = {'leftTicketDTO.train_date': d_train_info['train_date'],
                'leftTicketDTO.from_station': d_train_info['from_station'],
