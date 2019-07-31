@@ -61,6 +61,24 @@ def get_train_schedule(d_train_info):
     return schedule
 
 
+def __train_take_hours(l_train):
+    """
+    火车花费小时
+    :param l_train: 某一班次火车的信息
+    :return: number
+    """
+    return int(l_train[10].split(':')[0])
+
+
+def __train_take_minutes(l_train):
+    """
+    火车花费分钟
+    :param l_train: 某一班次火车的信息
+    :return: number
+    """
+    return int(l_train[10].split(':')[1])
+
+
 def clean_raw_schedule(l_raw_schedule, d_train_info):
     """
     清洗班次原始数据
@@ -82,13 +100,11 @@ def clean_raw_schedule(l_raw_schedule, d_train_info):
             # skip error time record
             continue
 
-        _cost_hour, _cost_min = map(int, l_train[10].split(':'))
-
         result.append({
             'number': l_train[3],
             'start_time': l_train[8],
             'end_time': l_train[9],
-            'cost_time': _cost_hour * 60 + _cost_min
+            'cost_time': __train_take_hours(l_train) * 60 + __train_take_minutes(l_train)
         })
 
     return result
