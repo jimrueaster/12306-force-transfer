@@ -32,12 +32,11 @@ def get_raw_schedule(d_train_info):
     :param d_train_info: 火车信息
     :return: list
     """
-    payload = {'leftTicketDTO.train_date': d_train_info['train_date'],
-               'leftTicketDTO.from_station': d_train_info['from_station'],
-               'leftTicketDTO.to_station': d_train_info['to_station'],
-               'purpose_codes': 'ADULT'}
-    url = 'https://kyfw.12306.cn/otn/leftTicket/query'
-    r = requests.get(url, params=payload)
+    r = requests.get(url='https://kyfw.12306.cn/otn/leftTicket/query',
+                     params={'leftTicketDTO.train_date': d_train_info['train_date'],
+                             'leftTicketDTO.from_station': d_train_info['from_station'],
+                             'leftTicketDTO.to_station': d_train_info['to_station'],
+                             'purpose_codes': 'ADULT'})
     r.encoding = 'utf-8'
     result = json.loads(r.text)
 
