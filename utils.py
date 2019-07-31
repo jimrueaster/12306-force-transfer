@@ -26,25 +26,22 @@ def validate_set_off_date(set_off_date):
         raise ValueError('Date should be later than today.')
 
 
-def get_raw_schedule(date, start_station, end_station):
+def get_raw_schedule(d_train_info):
     """
     Get Schedule from the Internet
-    :param date: the date to set off
-    :param start_station: the set off station
-    :param end_station: the arrival station
-    :return: list
+    :param d_train_info: 火车信息
+    :return: json
     """
-
-    payload = {'leftTicketDTO.train_date': date,
-               'leftTicketDTO.from_station': start_station,
-               'leftTicketDTO.to_station': end_station,
+    payload = {'leftTicketDTO.train_date': d_train_info['train_date'],
+               'leftTicketDTO.from_station': d_train_info['from_station'],
+               'leftTicketDTO.to_station': d_train_info['to_station'],
                'purpose_codes': 'ADULT'}
     url = 'https://kyfw.12306.cn/otn/leftTicket/query'
     r = requests.get(url, params=payload)
     r.encoding = 'utf-8'
-    _obj = json.loads(r.text)
+    result = json.loads(r.text)
 
-    return _obj['data']['result']
+    return result['data']['result']
 
 
 def get_train_schedule(date, start_station, end_station):
@@ -55,7 +52,13 @@ def get_train_schedule(date, start_station, end_station):
     :param end_station: Arrival station, see the "Station List"
     :return: dict
     """
-    raw_schedule = get_raw_schedule(date, start_station, end_station)
+    raw_schedule = get_raw_schedule(
+        {
+            'train_date': date,
+            'from_station': start_station,
+            'to_station': end_station
+        }
+    )
 
     schedule = []
     for _train in raw_schedule:
