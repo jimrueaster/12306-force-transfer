@@ -43,15 +43,6 @@ def raw_schedule(d_train_info):
     return result['data']['result']
 
 
-def train_schedule(d_train_info):
-    """
-    获取火车时刻表
-    :param d_train_info: 火车信息
-    :return: list
-    """
-    return clean_raw_schedule(d_train_info)
-
-
 def __train_take_hours(l_train):
     """
     火车花费小时
@@ -80,10 +71,9 @@ def __is_specified_station(l_train, d_train_info):
     return l_train[6] != d_train_info['from_station'] or l_train[7] != d_train_info['to_station']
 
 
-def clean_raw_schedule(d_train_info):
+def train_schedule(d_train_info):
     """
-    清洗班次原始数据
-    :param raw_schedule: 原始班次
+    获取火车时刻表
     :param d_train_info: 火车信息
     :return: list
     """
