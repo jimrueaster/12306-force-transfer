@@ -49,8 +49,7 @@ def train_schedule(d_train_info):
     :param d_train_info: 火车信息
     :return: list
     """
-    schedule = clean_raw_schedule(raw_schedule(d_train_info), d_train_info)
-    return schedule
+    return clean_raw_schedule(d_train_info)
 
 
 def __train_take_hours(l_train):
@@ -81,15 +80,15 @@ def __is_specified_station(l_train, d_train_info):
     return l_train[6] != d_train_info['from_station'] or l_train[7] != d_train_info['to_station']
 
 
-def clean_raw_schedule(l_raw_schedule, d_train_info):
+def clean_raw_schedule(d_train_info):
     """
     清洗班次原始数据
-    :param l_raw_schedule: 原始班次
+    :param raw_schedule: 原始班次
     :param d_train_info: 火车信息
     :return: list
     """
     result = []
-    for train in l_raw_schedule:
+    for train in raw_schedule(d_train_info):
         l_train = train.split('|')
         # todo 实现独立的筛选规则,作为依赖注入,以便定制"跳过不想要的班次"
         if 'G' != l_train[3][0] and 'C' != l_train[3][0]:
