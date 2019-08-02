@@ -3,12 +3,15 @@
 # Author: Jimru Easter<295140325@qq.com>
 # Created on 2018-10-20 17:25
 
+from datetime import datetime
+from datetime import timedelta
+
 from pandas import DataFrame
 from tabulate import tabulate
 
 from utils import *
 
-date = '2019-01-16'
+date = (datetime.now() + timedelta(days=1)).strftime('%Y-%m-%d')
 
 
 def force_transfer(set_off_date, from_station, transfer_station, to_station, from_time, to_time, no_more_than,
