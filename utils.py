@@ -26,7 +26,7 @@ def validate_set_off_date(set_off_date):
         raise ValueError('Date should be later than today.')
 
 
-def get_raw_schedule(d_train_info):
+def raw_schedule(d_train_info):
     """
     Get Schedule from the Internet
     :param d_train_info: 火车信息
@@ -43,21 +43,13 @@ def get_raw_schedule(d_train_info):
     return result['data']['result']
 
 
-def get_train_schedule(d_train_info):
+def train_schedule(d_train_info):
     """
     获取火车时刻表
     :param d_train_info: 火车信息
     :return: list
     """
-    raw_schedule = get_raw_schedule(
-        {
-            'train_date': d_train_info['train_date'],
-            'from_station': d_train_info['from_station'],
-            'to_station': d_train_info['to_station'],
-        }
-    )
-
-    schedule = clean_raw_schedule(raw_schedule, d_train_info)
+    schedule = clean_raw_schedule(raw_schedule(d_train_info), d_train_info)
     return schedule
 
 
@@ -119,7 +111,7 @@ def clean_raw_schedule(l_raw_schedule, d_train_info):
     return result
 
 
-def cal_interval_secs(t1, t2):
+def calc_interval_secs(t1, t2):
     """
     (time1 - time2) and returns sec
     :param t1: time1

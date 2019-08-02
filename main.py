@@ -28,12 +28,12 @@ def force_transfer(set_off_date, from_station, transfer_station, to_station, fro
 
     validate_set_off_date(set_off_date)
 
-    fr_tsf_simple_schedule = get_train_schedule({
+    fr_tsf_simple_schedule = train_schedule({
         'train_date': set_off_date,
         'from_station': from_station,
         'to_station': transfer_station,
     })
-    tsf_to_simple_schedule = get_train_schedule({
+    tsf_to_simple_schedule = train_schedule({
         'train_date': set_off_date,
         'from_station': transfer_station,
         'to_station': to_station,
@@ -49,9 +49,9 @@ def force_transfer(set_off_date, from_station, transfer_station, to_station, fro
             boarding_interval = calc_boarding_interval(datetime2_start)
             _boarding_interval_start = set_off_date + ' ' + boarding_interval['start'] + ':00'
 
-            if cal_interval_secs(_boarding_interval_start, datetime1_end) / 60 <= 5:
+            if calc_interval_secs(_boarding_interval_start, datetime1_end) / 60 <= 5:
                 continue
-            if cal_interval_secs(datetime2_end, datetime1_start) / 60 > no_more_than:
+            if calc_interval_secs(datetime2_end, datetime1_start) / 60 > no_more_than:
                 # if this set off time make the trip longer than the limit time,
                 # then this loop can directly break 
                 # because the time will longer than current result
@@ -69,7 +69,7 @@ def force_transfer(set_off_date, from_station, transfer_station, to_station, fro
                 'boarding_interval': '%s-%s' % (boarding_interval['start'], boarding_interval['end']),
                 'start_time2': train2['start_time'],
                 'end_time2': train2['end_time'],
-                'cost_time': cal_interval_secs(datetime2_end, datetime1_start) / 60
+                'cost_time': calc_interval_secs(datetime2_end, datetime1_start) / 60
             }
             result.append(_res)
 
