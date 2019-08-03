@@ -45,12 +45,12 @@ def force_transfer(set_off_date, from_station, transfer_station, to_station, fro
     result = []
     for train1 in fr_tsf_simple_schedule:
         for train2 in tsf_to_simple_schedule:
-            datetime1_start = set_off_date + ' ' + train1['start_time'] + ':00'
-            datetime1_end = set_off_date + ' ' + train1['end_time'] + ':00'
-            datetime2_start = set_off_date + ' ' + train2['start_time'] + ':00'
-            datetime2_end = set_off_date + ' ' + train2['end_time'] + ':00'
+            datetime1_start = set_off_date + ' ' + train1['start_time']
+            datetime1_end = set_off_date + ' ' + train1['end_time']
+            datetime2_start = set_off_date + ' ' + train2['start_time']
+            datetime2_end = set_off_date + ' ' + train2['end_time']
             boarding_interval = calc_boarding_interval(datetime2_start)
-            _boarding_interval_start = set_off_date + ' ' + boarding_interval['start'] + ':00'
+            _boarding_interval_start = set_off_date + ' ' + boarding_interval['start']
 
             if calc_interval_secs(_boarding_interval_start, datetime1_end) / 60 <= 5:
                 continue

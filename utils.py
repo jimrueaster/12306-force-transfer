@@ -92,8 +92,8 @@ def train_schedule(d_train_info):
 
         result.append({
             'number': l_train[3],
-            'start_time': l_train[8],
-            'end_time': l_train[9],
+            'start_time': l_train[8] + ':00',
+            'end_time': l_train[9] + ':00',
             'cost_time': __train_take_hours(l_train) * 60 + __train_take_minutes(l_train)
         })
 
@@ -121,8 +121,9 @@ def calc_boarding_interval(depart_time):
     :return: dict
     """
     start_boarding = (dt.datetime.strptime(depart_time, '%Y-%m-%d %H:%M:%S') - dt.timedelta(minutes=15)).strftime(
-        '%H:%M')
-    end_boarding = (dt.datetime.strptime(depart_time, '%Y-%m-%d %H:%M:%S') - dt.timedelta(minutes=5)).strftime('%H:%M')
+        '%H:%M:%S')
+    end_boarding = (dt.datetime.strptime(depart_time, '%Y-%m-%d %H:%M:%S') - dt.timedelta(minutes=5)).strftime(
+        '%H:%M:%S')
     return {
         'start': start_boarding,
         'end': end_boarding
