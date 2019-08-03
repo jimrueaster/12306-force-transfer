@@ -14,8 +14,7 @@ from utils import *
 date = (datetime.now() + timedelta(days=1)).strftime('%Y-%m-%d')
 
 
-def force_transfer(set_off_date, from_station, transfer_station, to_station, from_time, to_time, no_more_than,
-                   print_res=True):
+def force_transfer(set_off_date, from_station, transfer_station, to_station, from_time, to_time, no_more_than):
     """
     main function
     :param string set_off_date: 'yyyy-mm-dd'
@@ -25,7 +24,6 @@ def force_transfer(set_off_date, from_station, transfer_station, to_station, fro
     :param int from_time: hh
     :param int to_time: hh
     :param int no_more_than: mins
-    :param bool print_res:
     :return:
     """
 
@@ -45,24 +43,33 @@ def force_transfer(set_off_date, from_station, transfer_station, to_station, fro
     result = transfer_schedule(fr_tsf_simple_schedule, tsf_to_simple_schedule, set_off_date, no_more_than,
                                from_time, to_time)
 
-    if not print_res:
-        return result
-    result_list = [x.values() for x in result]
+    return result
+
+
+def print_schedule_as_table(schedule):
+    """
+    以表格形式输出班次
+    :param schedule:
+    :return:
+    """
+    result_list = [x.values() for x in schedule]
 
     df = DataFrame(result_list)
 
     headers = ['Train1', 'Train2', 'Train1 Depart', 'Train1 Arrive', 'Boarding', 'Train2 Depart',
                'Train2 Arrive', 'Cost Time(min)']
     print(tabulate(df, headers=headers, tablefmt='fancy_grid', showindex=False))
-    return result
 
 
 print()
 print(u'广州南->香港西九龙', end='\n\n')
-force_transfer(set_off_date=date, from_station='IZQ', transfer_station='IOQ',
-               to_station='XJA', from_time=10, no_more_than=90, to_time=12)
+from_trans_schedule = force_transfer(set_off_date=date, from_station='IZQ', transfer_station='IOQ',
+                                     to_station='XJA', from_time=10, no_more_than=90, to_time=12)
+print_schedule_as_table(from_trans_schedule)
 
 print()
 print(u'香港西九龙->广州南', end='\n\n')
-force_transfer(set_off_date=date, from_station='XJA', transfer_station='IOQ',
-               to_station='IZQ', from_time=20, no_more_than=90, to_time=22)
+trans_to_schedule = force_transfer(set_off_date=date, from_station='XJA', transfer_station='IOQ',
+                                   to_station='IZQ', from_time=20, no_more_than=90, to_time=22)
+
+print_schedule_as_table(trans_to_schedule)
