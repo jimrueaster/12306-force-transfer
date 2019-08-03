@@ -2,28 +2,32 @@
 
 用于增强12306同站换乘班次搜索的功能
 
-#### 依赖库
+### 依赖库
 + requests
 + pandas
 + tabulate
 
-#### 用法
+### 用法
 
-> 获取库
+#### 获取库
 
 ```
 git clone https://github.com/jimrueaster/12306-smart-transfer.git
 ```
 
-> 修改 main.py 的 `date`
+#### 切换到代码根目录
 
 ```
-# main.py
-# 出发日期
-date = '2019-01-16' 
+cd 12306-smart-transfer
 ```
 
-> 修改提示语句为“你的实际始发和终到站”
+#### 获取 JRUtils 工具库
+
+```
+git clone https://github.com/jimrueaster/JRUtils.git
+```
+
+### 修改提示语句为“你的实际始发和终到站”
 
 ```
 # main.py
@@ -32,7 +36,7 @@ print(u'广州南->香港西九龙', end='\n\n')
 print(u'香港西九龙->广州南', end='\n\n')
 ```
 
-> 修改参数  
+### 修改参数
 > [站点缩写参考](https://im0x.com/C/detail/155) 
 
 ```
@@ -50,7 +54,7 @@ force_transfer(set_off_date=date, from_station='XJA', transfer_station='IOQ',
                to_station='IZQ', from_time=20, no_more_than=90, to_time=22)
 ```
 
-> 运行脚本即可输出可视化结果
+### 运行脚本即可输出可视化结果
 
 ```
 Done!
