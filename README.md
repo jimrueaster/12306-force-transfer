@@ -37,7 +37,7 @@ print(u'香港西九龙->广州南', end='\n\n')
 ```
 
 ### 修改参数
-> [站点缩写参考](https://im0x.com/C/detail/155) 
+> [站点缩写参考](https://kyfw.12306.cn/otn/resources/js/framework/station_name.js)
 
 ```
 # from_station      出发站
