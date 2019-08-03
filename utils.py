@@ -155,10 +155,7 @@ def transfer_schedule(fr_tsf_simple_schedule, tsf_to_simple_schedule, set_off_da
             if calc_interval_secs(_boarding_interval_start, datetime1_end) / 60 <= 5:
                 continue
             if calc_interval_secs(datetime2_end, datetime1_start) / 60 > no_more_than:
-                # if this set off time make the trip longer than the limit time,
-                # then this loop can directly break
-                # because the time will longer than current result
-                break
+                continue
             if datetime1_start <= set_off_date + ' %02d:00:00' % from_time:
                 continue
             if datetime2_end >= set_off_date + ' %02d:00:00' % to_time:
