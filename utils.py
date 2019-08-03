@@ -92,8 +92,8 @@ def train_schedule(d_train_info):
 
         result.append({
             'number': l_train[3],
-            'start_time': l_train[8] + ':00',
-            'end_time': l_train[9] + ':00',
+            'start_time': d_train_info['train_date'] + ' ' + l_train[8] + ':00',
+            'end_time': d_train_info['train_date'] + ' ' + l_train[9] + ':00',
             'cost_time': __train_take_hours(l_train) * 60 + __train_take_minutes(l_train)
         })
 
@@ -145,10 +145,10 @@ def transfer_schedule(fr_tsf_simple_schedule, tsf_to_simple_schedule, set_off_da
     result = []
     for train1 in fr_tsf_simple_schedule:
         for train2 in tsf_to_simple_schedule:
-            train1_set_off_time_start = set_off_date + ' ' + train1['start_time']
-            train1_set_off_time_end = set_off_date + ' ' + train1['end_time']
-            train2_set_off_time_start = set_off_date + ' ' + train2['start_time']
-            train2_set_off_time_end = set_off_date + ' ' + train2['end_time']
+            train1_set_off_time_start = train1['start_time']
+            train1_set_off_time_end = train1['end_time']
+            train2_set_off_time_start = train2['start_time']
+            train2_set_off_time_end = train2['end_time']
             boarding_interval = calc_boarding_interval(train2_set_off_time_start)
             _boarding_interval_start = set_off_date + ' ' + boarding_interval['start']
 
