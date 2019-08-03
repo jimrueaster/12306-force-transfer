@@ -47,10 +47,10 @@ print(u'香港西九龙->广州南', end='\n\n')
 # no_more_than      整体行程耗时限制(分钟)
 # to_time           最晚到达时间
 
-force_transfer(set_off_date=date, from_station='IZQ', transfer_station='IOQ',
+smart_transfer(set_off_date=date, from_station='IZQ', transfer_station='IOQ',
                to_station='XJA', from_time=10, no_more_than=90, to_time=12)
 
-force_transfer(set_off_date=date, from_station='XJA', transfer_station='IOQ',
+smart_transfer(set_off_date=date, from_station='XJA', transfer_station='IOQ',
                to_station='IZQ', from_time=20, no_more_than=90, to_time=22)
 ```
 

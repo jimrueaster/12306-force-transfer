@@ -14,7 +14,7 @@ from utils import *
 date = (datetime.now() + timedelta(days=1)).strftime('%Y-%m-%d')
 
 
-def force_transfer(set_off_date, from_station, transfer_station, to_station, from_time, to_time, no_more_than):
+def smart_transfer(set_off_date, from_station, transfer_station, to_station, from_time, to_time, no_more_than):
     """
     main function
     :param string set_off_date: 'yyyy-mm-dd'
@@ -63,13 +63,13 @@ def print_schedule_as_table(schedule):
 
 print()
 print(u'广州南->香港西九龙', end='\n\n')
-from_trans_schedule = force_transfer(set_off_date=date, from_station='IZQ', transfer_station='IOQ',
+from_trans_schedule = smart_transfer(set_off_date=date, from_station='IZQ', transfer_station='IOQ',
                                      to_station='XJA', from_time=10, no_more_than=90, to_time=12)
 print_schedule_as_table(from_trans_schedule)
 
 print()
 print(u'香港西九龙->广州南', end='\n\n')
-trans_to_schedule = force_transfer(set_off_date=date, from_station='XJA', transfer_station='IOQ',
+trans_to_schedule = smart_transfer(set_off_date=date, from_station='XJA', transfer_station='IOQ',
                                    to_station='IZQ', from_time=20, no_more_than=90, to_time=22)
 
 print_schedule_as_table(trans_to_schedule)
