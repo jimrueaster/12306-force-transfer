@@ -125,8 +125,8 @@ def calc_boarding_interval(depart_time):
     end_boarding = (dt.datetime.strptime(depart_time, '%Y-%m-%d %H:%M:%S') - dt.timedelta(minutes=5)).strftime(
         '%Y-%m-%d %H:%M:%S')
     return {
-        'start': start_boarding,
-        'end': end_boarding
+        'start_time': start_boarding,
+        'end_time': end_boarding
     }
 
 
@@ -146,9 +146,8 @@ def transfer_schedule(fr_tsf_simple_schedule, tsf_to_simple_schedule, set_off_da
     for train1 in fr_tsf_simple_schedule:
         for train2 in tsf_to_simple_schedule:
             boarding_interval = calc_boarding_interval(train2['start_time'])
-            _boarding_interval_start = boarding_interval['start']
 
-            if calc_interval_secs(_boarding_interval_start, train1['end_time']) / 60 <= 5:
+            if calc_interval_secs(boarding_interval['start_time'], train1['end_time']) / 60 <= 5:
                 continue
             if calc_interval_secs(train2['end_time'], train1['start_time']) / 60 > no_more_than:
                 continue
@@ -162,7 +161,7 @@ def transfer_schedule(fr_tsf_simple_schedule, tsf_to_simple_schedule, set_off_da
                 'number2': train2['number'],
                 'start_time1': train1['start_time'],
                 'end_time1': train1['end_time'],
-                'boarding_interval': '%s-%s' % (boarding_interval['start'], boarding_interval['end']),
+                'boarding_interval': '%s-%s' % (boarding_interval['start_time'], boarding_interval['end_time']),
                 'start_time2': train2['start_time'],
                 'end_time2': train2['end_time'],
                 'cost_time': calc_interval_secs(train2['end_time'], train1['start_time']) / 60
