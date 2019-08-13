@@ -11,16 +11,16 @@ import requests
 import JRUtils.simple_time as jst
 
 
-def validate_set_off_date(set_off_date):
+def validate_set_off_date(s_set_off_date):
     """
     验证出发日期
-    :param set_off_date: 出发日期(YYYY-mm-dd)
+    :param s_set_off_date: 出发日期(YYYY-mm-dd)
     :return: void
     """
 
     fmt = '%Y-%m-%d'
     today = dt.date.today().strftime(fmt)
-    res = jst.compare_datetime(set_off_date, fmt, today, fmt)
+    res = jst.compare_datetime(s_set_off_date, fmt, today, fmt)
 
     if res <= 0:
         raise ValueError('Date should be later than today.')
