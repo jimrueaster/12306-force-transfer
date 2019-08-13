@@ -63,12 +63,12 @@ def __train_take_minutes(l_train):
 
 def __is_specified_station(l_train, d_train_info):
     """
-    skip if start station or end station doesn't match
+    是否指定的出发和到达站
     :param l_train: 某一班次火车的信息
     :param d_train_info: 火车信息
     :return:
     """
-    return l_train[6] != d_train_info['from_station'] or l_train[7] != d_train_info['to_station']
+    return l_train[6] == d_train_info['from_station'] and l_train[7] == d_train_info['to_station']
 
 
 def train_schedule(d_train_info):
@@ -84,7 +84,7 @@ def train_schedule(d_train_info):
         if 'G' != l_train[3][0] and 'C' != l_train[3][0]:
             # skip if not High Speed Railway
             continue
-        if __is_specified_station(l_train, d_train_info):
+        if not __is_specified_station(l_train, d_train_info):
             continue
         if l_train[9] == '24:00':
             # skip error time record
