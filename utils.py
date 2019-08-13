@@ -161,7 +161,7 @@ def transfer_schedule(fr_tsf_simple_schedule, tsf_to_simple_schedule, set_off_da
                 'number2': train2['number'],
                 'start_time1': train1['start_time'],
                 'end_time1': train1['end_time'],
-                'boarding_interval': '%s-%s' % (boarding_interval['start_time'], boarding_interval['end_time']),
+                'boarding_interval': '%s - %s' % (boarding_interval['start_time'], boarding_interval['end_time']),
                 'start_time2': train2['start_time'],
                 'end_time2': train2['end_time'],
                 'cost_time': calc_interval_secs(train2['end_time'], train1['start_time']) / 60
