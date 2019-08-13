@@ -61,6 +61,15 @@ def __train_take_minutes(l_train):
     return int(l_train[10].split(':')[1])
 
 
+def __is_high_speed_railway(l_train):
+    """
+    是否高铁班次
+    :param l_train: 某一班次火车的信息
+    :return: bool
+    """
+    return 'G' == l_train[3][0] or 'C' == l_train[3][0]
+
+
 def __is_specified_station(l_train, d_train_info):
     """
     是否指定的出发和到达站
@@ -81,8 +90,7 @@ def train_schedule(d_train_info):
     for train in raw_schedule(d_train_info):
         l_train = train.split('|')
         # todo 实现独立的筛选规则,作为依赖注入,以便定制"跳过不想要的班次"
-        if 'G' != l_train[3][0] and 'C' != l_train[3][0]:
-            # skip if not High Speed Railway
+        if not __is_high_speed_railway(l_train):
             continue
         if not __is_specified_station(l_train, d_train_info):
             continue
