@@ -61,7 +61,7 @@ def print_schedule_as_table(schedule):
     print(tabulate(df, headers=headers, tablefmt='fancy_grid', showindex=False))
 
 
-print()
+print(date)
 print(u'广州南->香港西九龙', end='\n\n')
 from_trans_schedule = smart_transfer(set_off_date=date, from_station='IZQ', transfer_station='IOQ',
                                      to_station='XJA', from_time=10, no_more_than=90, to_time=12)
