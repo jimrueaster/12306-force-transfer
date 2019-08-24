@@ -167,11 +167,12 @@ def transfer_schedule(fr_tsf_simple_schedule, tsf_to_simple_schedule, set_off_da
             _res = {
                 'number1': train1['number'],
                 'number2': train2['number'],
-                'start_time1': train1['start_time'],
-                'end_time1': train1['end_time'],
-                'boarding_interval': '%s - %s' % (boarding_interval['start_time'], boarding_interval['end_time']),
-                'start_time2': train2['start_time'],
-                'end_time2': train2['end_time'],
+                'start_time1': simplify_datetime_format(train1['start_time']),
+                'end_time1': simplify_datetime_format(train1['end_time']),
+                'boarding_interval': '%s - %s' % (simplify_datetime_format(boarding_interval['start_time']),
+                                                  simplify_datetime_format(boarding_interval['end_time'])),
+                'start_time2': simplify_datetime_format(train2['start_time']),
+                'end_time2': simplify_datetime_format(train2['end_time']),
                 'cost_time': calc_interval_secs(train2['end_time'], train1['start_time']) / 60
             }
             result.append(_res)
@@ -179,3 +180,12 @@ def transfer_schedule(fr_tsf_simple_schedule, tsf_to_simple_schedule, set_off_da
     result = sorted(result, key=lambda s: s['start_time1'])
     result = sorted(result, key=lambda s: s['cost_time'])
     return result
+
+
+def simplify_datetime_format(s_datetime):
+    """
+    简化输出的时间格式
+    :param s_datetime: 时间字符串
+    :return: string
+    """
+    return jst.convert_format(s_datetime, '%Y-%m-%d %H:%M:%S', '%H:%M')
