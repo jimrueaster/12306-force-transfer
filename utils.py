@@ -164,7 +164,7 @@ def transfer_schedule(fr_tsf_simple_schedule, tsf_to_simple_schedule, set_off_da
             if train2['end_time'] >= set_off_date + ' %02d:00:00' % to_time:
                 continue
 
-            _res = {
+            result.append({
                 'number1': train1['number'],
                 'number2': train2['number'],
                 'start_time1': simplify_datetime_format(train1['start_time']),
@@ -174,8 +174,7 @@ def transfer_schedule(fr_tsf_simple_schedule, tsf_to_simple_schedule, set_off_da
                 'start_time2': simplify_datetime_format(train2['start_time']),
                 'end_time2': simplify_datetime_format(train2['end_time']),
                 'cost_time': calc_interval_secs(train2['end_time'], train1['start_time']) / 60
-            }
-            result.append(_res)
+            })
 
     result = sorted(result, key=lambda s: s['start_time1'])
     result = sorted(result, key=lambda s: s['cost_time'])
