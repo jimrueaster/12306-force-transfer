@@ -11,23 +11,14 @@ from tabulate import tabulate
 
 from utils import *
 
-date = (datetime.now() + timedelta(days=1)).strftime('%Y-%m-%d')
-print(date)
+
+def default_set_off_date():
+    return (datetime.now() + timedelta(days=1)).strftime('%Y-%m-%d')
 
 
 def print_stations(d_stations):
     print("{}->{}->{}".format(d_stations['from_station'], d_stations['transfer_station'], d_stations['to_station']),
           end='\n\n')
-
-
-# todo 封装代码
-stations = {
-    'from_station': '广州南',
-    'transfer_station': '深圳北',
-    'to_station': '香港西九龙',
-}
-
-print_stations(stations)
 
 
 def smart_transfer(s_set_off_date, d_stations, i_from_time, i_to_time, i_no_more_than):
@@ -96,14 +87,25 @@ def reverse_stations(d_stations):
     }
 
 
-from_trans_schedule = smart_transfer(s_set_off_date=date, d_stations=stations, i_from_time=10, i_no_more_than=90,
+set_off_date = default_set_off_date()
+print(set_off_date)
+
+# todo 封装代码
+stations = {
+    'from_station': '广州南',
+    'transfer_station': '深圳北',
+    'to_station': '香港西九龙',
+}
+print_stations(stations)
+from_trans_schedule = smart_transfer(s_set_off_date=set_off_date, d_stations=stations, i_from_time=10,
+                                     i_no_more_than=90,
                                      i_to_time=12)
 print_schedule_as_table(from_trans_schedule)
 
 reversed_stations = reverse_stations(stations)
 print_stations(reversed_stations)
 
-trans_to_schedule = smart_transfer(s_set_off_date=date, d_stations=reversed_stations, i_from_time=20,
+trans_to_schedule = smart_transfer(s_set_off_date=set_off_date, d_stations=reversed_stations, i_from_time=20,
                                    i_no_more_than=90,
                                    i_to_time=22)
 
