@@ -79,13 +79,6 @@ def print_schedule_as_table(schedule):
     print(tabulate(df, headers=headers, tablefmt='fancy_grid', showindex=False))
 
 
-from_trans_schedule = smart_transfer(s_set_off_date=date, d_stations=stations, i_from_time=10, i_no_more_than=90,
-                                     i_to_time=12)
-print_schedule_as_table(from_trans_schedule)
-
-print(u'\n香港西九龙->广州南', end='\n\n')
-
-
 def reverse_stations(d_stations):
     """
     翻转出发/换乘/到达站
@@ -102,6 +95,12 @@ def reverse_stations(d_stations):
         'to_station': d_stations['from_station'],
     }
 
+
+from_trans_schedule = smart_transfer(s_set_off_date=date, d_stations=stations, i_from_time=10, i_no_more_than=90,
+                                     i_to_time=12)
+print_schedule_as_table(from_trans_schedule)
+
+print(u'\n香港西九龙->广州南', end='\n\n')
 
 trans_to_schedule = smart_transfer(s_set_off_date=date, d_stations=reverse_stations(stations), i_from_time=20,
                                    i_no_more_than=90,
