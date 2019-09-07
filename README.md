@@ -31,9 +31,11 @@ git clone https://github.com/jimrueaster/JRUtils.git
 
 ```
 # main.py
-print(u'广州南->香港西九龙', end='\n\n')
-
-print(u'香港西九龙->广州南', end='\n\n')
+stations = {
+    'from_station': '广州南',
+    'transfer_station': '深圳北',
+    'to_station': '香港西九龙',
+}
 ```
 
 ### 修改参数
@@ -47,11 +49,10 @@ print(u'香港西九龙->广州南', end='\n\n')
 # no_more_than      整体行程耗时限制(分钟)
 # to_time           最晚到达时间
 
-smart_transfer(set_off_date=date, from_station='IZQ', transfer_station='IOQ',
-               to_station='XJA', from_time=10, no_more_than=90, to_time=12)
-
-smart_transfer(set_off_date=date, from_station='XJA', transfer_station='IOQ',
-               to_station='IZQ', from_time=20, no_more_than=90, to_time=22)
+smart_transfer(s_set_off_date=date, d_stations=stations, i_from_time=10, i_no_more_than=90,
+                                     i_to_time=12)
+smart_transfer(s_set_off_date=date, d_stations=reverse_stations, i_from_time=20, i_no_more_than=90,
+                                   i_to_time=22)
 ```
 
 ### 运行脚本即可输出可视化结果

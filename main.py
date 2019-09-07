@@ -14,34 +14,35 @@ from utils import *
 date = (datetime.now() + timedelta(days=1)).strftime('%Y-%m-%d')
 
 
-def smart_transfer(set_off_date, from_station, transfer_station, to_station, from_time, to_time, no_more_than):
+def smart_transfer(s_set_off_date, d_stations, i_from_time, i_to_time, i_no_more_than):
     """
     main function
-    :param string set_off_date: 'yyyy-mm-dd'
-    :param string from_station: 12306 code
-    :param string transfer_station: 12306 code
-    :param string to_station: 12306 code
-    :param int from_time: hh
-    :param int to_time: hh
-    :param int no_more_than: mins
-    :return:
-    """
-
-    validate_set_off_date(set_off_date)
-
-    fr_tsf_simple_schedule = train_schedule({
+    :param s_set_off_date: 'yyyy-mm-dd'
+    :param d_stations: {
         'train_date': set_off_date,
         'from_station': from_station,
         'to_station': transfer_station,
+    }
+    :param i_from_time: hh
+    :param i_to_time: hh
+    :param i_no_more_than: minutes
+    :return:
+    """
+    validate_set_off_date(s_set_off_date)
+
+    fr_tsf_simple_schedule = train_schedule({
+        'train_date': s_set_off_date,
+        'from_station': station_name_2_code(d_stations['from_station']),
+        'to_station': station_name_2_code(d_stations['transfer_station']),
     })
     tsf_to_simple_schedule = train_schedule({
-        'train_date': set_off_date,
-        'from_station': transfer_station,
-        'to_station': to_station,
+        'train_date': s_set_off_date,
+        'from_station': station_name_2_code(d_stations['transfer_station']),
+        'to_station': station_name_2_code(d_stations['to_station']),
     })
 
-    result = transfer_schedule(fr_tsf_simple_schedule, tsf_to_simple_schedule, set_off_date, no_more_than,
-                               from_time, to_time)
+    result = transfer_schedule(fr_tsf_simple_schedule, tsf_to_simple_schedule, s_set_off_date, i_no_more_than,
+                               i_from_time, i_to_time)
 
     return result
 
@@ -62,25 +63,26 @@ def print_schedule_as_table(schedule):
 
 
 print(date)
-# todo 封装代码、车站字典
-from_station = '广州南'
-transfer_station = '深圳北'
-to_station = '香港西九龙'
-print("{}->{}->{}".format(from_station, transfer_station, to_station), end='\n\n')
+# todo 封装代码
+stations = {
+    'from_station': '广州南',
+    'transfer_station': '深圳北',
+    'to_station': '香港西九龙',
+}
+print("{}->{}->{}".format(stations['from_station'], stations['transfer_station'], stations['to_station']), end='\n\n')
 
-from_station_code = station_name_2_code(from_station)
-transfer_station_code = station_name_2_code(transfer_station)
-to_station_code = station_name_2_code(to_station)
-
-from_trans_schedule = smart_transfer(set_off_date=date, from_station=from_station_code,
-                                     transfer_station=transfer_station_code,
-                                     to_station=to_station_code, from_time=10, no_more_than=90, to_time=12)
+from_trans_schedule = smart_transfer(s_set_off_date=date, d_stations=stations, i_from_time=10, i_no_more_than=90,
+                                     i_to_time=12)
 print_schedule_as_table(from_trans_schedule)
 
 print()
 print(u'香港西九龙->广州南', end='\n\n')
-trans_to_schedule = smart_transfer(set_off_date=date, from_station=to_station_code,
-                                   transfer_station=transfer_station_code,
-                                   to_station=from_station_code, from_time=20, no_more_than=90, to_time=22)
+reverse_stations = {
+    'from_station': stations['to_station'],
+    'transfer_station': stations['transfer_station'],
+    'to_station': stations['from_station'],
+}
+trans_to_schedule = smart_transfer(s_set_off_date=date, d_stations=reverse_stations, i_from_time=20, i_no_more_than=90,
+                                   i_to_time=22)
 
 print_schedule_as_table(trans_to_schedule)
