@@ -148,7 +148,7 @@ def transfer_schedule(fr_tsf_simple_schedule, tsf_to_simple_schedule, set_off_da
     :param no_more_than:
     :param from_time:
     :param to_time:
-    :return:
+    :return: list
     """
     result = []
     for train1 in fr_tsf_simple_schedule:
@@ -193,7 +193,7 @@ def simplify_datetime_format(s_datetime):
 def __raw_stations():
     """
     从网络获取车站清单
-    :return:
+    :return: string
     """
     r = requests.get(url='https://kyfw.12306.cn/otn/resources/js/framework/station_name.js')
     r.encoding = 'utf-8'
@@ -203,7 +203,7 @@ def __raw_stations():
 def station_list():
     """
     过滤获得车站列表
-    :return:
+    :return: dict
     """
     result = {}
     for station in __raw_stations().lstrip("var station_names ='@").rstrip("';").split('@'):
@@ -217,7 +217,7 @@ def station_list():
 def station_name_2_code(s_station_name):
     """
     车站名转换为代码
-    :param s_station_name:
-    :return:
+    :param s_station_name: 车站名
+    :return: string
     """
     return station_list()[s_station_name]

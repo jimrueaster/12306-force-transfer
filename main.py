@@ -13,10 +13,23 @@ from utils import *
 
 
 def default_set_off_date():
+    """
+    获取默认出发日期
+    :return: string
+    """
     return (datetime.now() + timedelta(days=1)).strftime('%Y-%m-%d')
 
 
 def print_stations(d_stations):
+    """
+    输出车站列表
+    :param d_stations: {
+        'from_station': '广州南',
+        'transfer_station': '深圳北',
+        'to_station': '香港西九龙',
+    }
+    :return: void
+    """
     print("{}->{}->{}".format(d_stations['from_station'], d_stations['transfer_station'], d_stations['to_station']),
           end='\n\n')
 
@@ -33,7 +46,7 @@ def smart_transfer(s_set_off_date, d_stations, i_from_time, i_to_time, i_no_more
     :param i_from_time: hh
     :param i_to_time: hh
     :param i_no_more_than: minutes
-    :return:
+    :return: list
     """
     validate_set_off_date(s_set_off_date)
 
@@ -58,7 +71,7 @@ def print_schedule_as_table(schedule):
     """
     以表格形式输出班次
     :param schedule:
-    :return:
+    :return: void
     """
     result_list = [x.values() for x in schedule]
 
@@ -77,7 +90,7 @@ def reverse_stations(d_stations):
         'transfer_station': '深圳北',
         'to_station': '香港西九龙',
     }
-    :return:
+    :return: dict
     """
     return {
         'from_station': d_stations['to_station'],
