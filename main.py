@@ -12,6 +12,22 @@ from tabulate import tabulate
 from utils import *
 
 date = (datetime.now() + timedelta(days=1)).strftime('%Y-%m-%d')
+print(date)
+
+
+def print_stations(d_stations):
+    print("{}->{}->{}".format(d_stations['from_station'], d_stations['transfer_station'], d_stations['to_station']),
+          end='\n\n')
+
+
+# todo 封装代码
+stations = {
+    'from_station': '广州南',
+    'transfer_station': '深圳北',
+    'to_station': '香港西九龙',
+}
+
+print_stations(stations)
 
 
 def smart_transfer(s_set_off_date, d_stations, i_from_time, i_to_time, i_no_more_than):
@@ -61,15 +77,6 @@ def print_schedule_as_table(schedule):
                'Train2 Arrive', 'Cost Time(min)']
     print(tabulate(df, headers=headers, tablefmt='fancy_grid', showindex=False))
 
-
-print(date)
-# todo 封装代码
-stations = {
-    'from_station': '广州南',
-    'transfer_station': '深圳北',
-    'to_station': '香港西九龙',
-}
-print("{}->{}->{}".format(stations['from_station'], stations['transfer_station'], stations['to_station']), end='\n\n')
 
 from_trans_schedule = smart_transfer(s_set_off_date=date, d_stations=stations, i_from_time=10, i_no_more_than=90,
                                      i_to_time=12)
