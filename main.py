@@ -100,9 +100,10 @@ from_trans_schedule = smart_transfer(s_set_off_date=date, d_stations=stations, i
                                      i_to_time=12)
 print_schedule_as_table(from_trans_schedule)
 
-print(u'\n香港西九龙->广州南', end='\n\n')
+reversed_stations = reverse_stations(stations)
+print_stations(reversed_stations)
 
-trans_to_schedule = smart_transfer(s_set_off_date=date, d_stations=reverse_stations(stations), i_from_time=20,
+trans_to_schedule = smart_transfer(s_set_off_date=date, d_stations=reversed_stations, i_from_time=20,
                                    i_no_more_than=90,
                                    i_to_time=22)
 
