@@ -62,14 +62,25 @@ def print_schedule_as_table(schedule):
 
 
 print(date)
-print(u'广州南->香港西九龙', end='\n\n')
-from_trans_schedule = smart_transfer(set_off_date=date, from_station='IZQ', transfer_station='IOQ',
-                                     to_station='XJA', from_time=10, no_more_than=90, to_time=12)
+# todo 封装代码、车站字典
+from_station = '广州南'
+transfer_station = '深圳北'
+to_station = '香港西九龙'
+print("{}->{}->{}".format(from_station, transfer_station, to_station), end='\n\n')
+
+from_station_code = station_name_2_code(from_station)
+transfer_station_code = station_name_2_code(transfer_station)
+to_station_code = station_name_2_code(to_station)
+
+from_trans_schedule = smart_transfer(set_off_date=date, from_station=from_station_code,
+                                     transfer_station=transfer_station_code,
+                                     to_station=to_station_code, from_time=10, no_more_than=90, to_time=12)
 print_schedule_as_table(from_trans_schedule)
 
 print()
 print(u'香港西九龙->广州南', end='\n\n')
-trans_to_schedule = smart_transfer(set_off_date=date, from_station='XJA', transfer_station='IOQ',
-                                   to_station='IZQ', from_time=20, no_more_than=90, to_time=22)
+trans_to_schedule = smart_transfer(set_off_date=date, from_station=to_station_code,
+                                   transfer_station=transfer_station_code,
+                                   to_station=from_station_code, from_time=20, no_more_than=90, to_time=22)
 
 print_schedule_as_table(trans_to_schedule)

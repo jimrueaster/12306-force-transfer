@@ -188,3 +188,36 @@ def simplify_datetime_format(s_datetime):
     :return: string
     """
     return jst.convert_format(s_datetime, '%Y-%m-%d %H:%M:%S', '%H:%M')
+
+
+def __raw_stations():
+    """
+    从网络获取车站清单
+    :return:
+    """
+    r = requests.get(url='https://kyfw.12306.cn/otn/resources/js/framework/station_name.js')
+    r.encoding = 'utf-8'
+    return r.text
+
+
+def station_list():
+    """
+    过滤获得车站列表
+    :return:
+    """
+    result = {}
+    for station in __raw_stations().lstrip("var station_names ='@").rstrip("';").split('@'):
+        station_name = station.split('|')[1]
+        station_code = station.split('|')[2]
+        result[station_name] = station_code
+
+    return result
+
+
+def station_name_2_code(s_station_name):
+    """
+    车站名转换为代码
+    :param s_station_name:
+    :return:
+    """
+    return station_list()[s_station_name]
