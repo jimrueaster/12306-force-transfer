@@ -25,11 +25,10 @@ def smart_transfer(s_set_off_date, d_stations, i_from_time, i_to_time, i_no_more
     """
     main function
     :param s_set_off_date: 'yyyy-mm-dd'
-    # todo fix wrong comments
     :param d_stations: {
-        'train_date': set_off_date,
-        'from_station': from_station,
-        'to_station': transfer_station,
+        'from_station': '广州南',
+        'transfer_station': '深圳北',
+        'to_station': '香港西九龙',
     }
     :param i_from_time: hh
     :param i_to_time: hh
