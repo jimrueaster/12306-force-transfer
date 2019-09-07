@@ -34,6 +34,7 @@ def smart_transfer(s_set_off_date, d_stations, i_from_time, i_to_time, i_no_more
     """
     main function
     :param s_set_off_date: 'yyyy-mm-dd'
+    # todo fix wrong comments
     :param d_stations: {
         'train_date': set_off_date,
         'from_station': from_station,
@@ -82,14 +83,28 @@ from_trans_schedule = smart_transfer(s_set_off_date=date, d_stations=stations, i
                                      i_to_time=12)
 print_schedule_as_table(from_trans_schedule)
 
-print()
-print(u'香港西九龙->广州南', end='\n\n')
-reverse_stations = {
-    'from_station': stations['to_station'],
-    'transfer_station': stations['transfer_station'],
-    'to_station': stations['from_station'],
-}
-trans_to_schedule = smart_transfer(s_set_off_date=date, d_stations=reverse_stations, i_from_time=20, i_no_more_than=90,
+print(u'\n香港西九龙->广州南', end='\n\n')
+
+
+def reverse_stations(d_stations):
+    """
+    翻转出发/换乘/到达站
+    :param d_stations:  {
+        'from_station': '广州南',
+        'transfer_station': '深圳北',
+        'to_station': '香港西九龙',
+    }
+    :return:
+    """
+    return {
+        'from_station': d_stations['to_station'],
+        'transfer_station': d_stations['transfer_station'],
+        'to_station': d_stations['from_station'],
+    }
+
+
+trans_to_schedule = smart_transfer(s_set_off_date=date, d_stations=reverse_stations(stations), i_from_time=20,
+                                   i_no_more_than=90,
                                    i_to_time=22)
 
 print_schedule_as_table(trans_to_schedule)
