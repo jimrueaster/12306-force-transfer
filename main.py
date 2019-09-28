@@ -77,7 +77,7 @@ def print_schedule_as_table(schedule):
 
     df = DataFrame(result_list)
 
-    headers = ['Train1', 'Train2', 'Train1 Depart', 'Train1 Arrive', 'Boarding', 'Train2 Depart',
+    headers = ['Train1', 'First Station', 'Train2', 'First Station', 'Train1 Depart', 'Train1 Arrive', 'Boarding', 'Train2 Depart',
                'Train2 Arrive', 'Cost Time(min)']
     print(tabulate(df, headers=headers, tablefmt='fancy_grid', showindex=False))
 

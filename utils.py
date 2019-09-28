@@ -102,7 +102,8 @@ def train_schedule(d_train_info):
             'number': l_train[3],
             'start_time': d_train_info['train_date'] + ' ' + l_train[8] + ':00',
             'end_time': d_train_info['train_date'] + ' ' + l_train[9] + ':00',
-            'cost_time': __train_take_hours(l_train) * 60 + __train_take_minutes(l_train)
+            'cost_time': __train_take_hours(l_train) * 60 + __train_take_minutes(l_train),
+            'is_depart_from_first_station': l_train[4] == l_train[6],
         })
 
     return result
@@ -166,7 +167,9 @@ def transfer_schedule(fr_tsf_simple_schedule, tsf_to_simple_schedule, set_off_da
 
             result.append({
                 'number1': train1['number'],
+                'is_depart_from_first_station1': train1['is_depart_from_first_station'],
                 'number2': train2['number'],
+                'is_depart_from_first_station2': train2['is_depart_from_first_station'],
                 'start_time1': simplify_datetime_format(train1['start_time']),
                 'end_time1': simplify_datetime_format(train1['end_time']),
                 'boarding_interval': '%s - %s' % (simplify_datetime_format(boarding_interval['start_time']),
