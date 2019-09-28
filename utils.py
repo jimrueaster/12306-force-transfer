@@ -36,7 +36,17 @@ def raw_schedule(d_train_info):
                      params={'leftTicketDTO.train_date': d_train_info['train_date'],
                              'leftTicketDTO.from_station': d_train_info['from_station'],
                              'leftTicketDTO.to_station': d_train_info['to_station'],
-                             'purpose_codes': 'ADULT'})
+                             'purpose_codes': 'ADULT'},
+                     headers={
+                         'Cookie': 'JSESSIONID=1144772D40C2A415CA674D41CFD91ADC; '
+                                   '_jc_save_wfdc_flag=dc; BIGipServerotn=720372234.24610.0000; '
+                                   'BIGipServerpool_passport=216859146.50215.0000; '
+                                   'RAIL_EXPIRATION=1569977221136; '
+                                   'RAIL_DEVICEID=cFVRNjjqNT66ctWW9hWPZHPmBunQjRbIV2b0aGbb-OS4l6_aR1Z8idn1BDrnzllLy97VszjEYXgQgXW601hJRcFtkZ7oBWtgMf4tT1ufyA6QhvaFLTRUmZqinGBLiHeQ1fiow73VogVZmIuWf_ql3hJedTn9YOLG; '
+                                   'route=6f50b51faa11b987e576cdb301e545c4; _jc_save_fromDate=2019-10-03; '
+                                   '_jc_save_toDate=2019-09-28; '
+                                   '_jc_save_fromStation=%u5E7F%u5DDE%u5357%2CIZQ; '
+                                   '_jc_save_toStation=%u6DF1%u5733%u5317%2CIOQ'})
     r.encoding = 'utf-8'
     result = json.loads(r.text)
 
