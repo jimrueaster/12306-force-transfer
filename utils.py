@@ -26,6 +26,16 @@ def validate_set_off_date(s_set_off_date):
         raise ValueError('Date should be later than today.')
 
 
+def schedule_cookie():
+    """
+    班次 Cookie
+    :return: string
+    """
+    return 'BIGipServerotn=955253258.38945.0000; ' \
+           'route=c5c62a339e7744272a54643b3be5bf64; ' \
+           'JSESSIONID=D05886DA8DE683BFB820372490C9A8CD; '
+
+
 def raw_schedule(d_train_info):
     """
     Get Schedule from the Internet
@@ -38,7 +48,7 @@ def raw_schedule(d_train_info):
                              'leftTicketDTO.to_station': d_train_info['to_station'],
                              'purpose_codes': 'ADULT'},
                      headers={
-                         'Cookie': 'BIGipServerotn=955253258.38945.0000; route=c5c62a339e7744272a54643b3be5bf64; JSESSIONID=D05886DA8DE683BFB820372490C9A8CD; '})
+                         'Cookie': schedule_cookie()})
     r.encoding = 'utf-8'
     result = json.loads(r.text)
 
