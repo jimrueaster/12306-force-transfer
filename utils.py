@@ -31,9 +31,13 @@ def schedule_cookie():
     班次 Cookie
     :return: string
     """
-    return 'BIGipServerotn=955253258.38945.0000; ' \
-           'route=c5c62a339e7744272a54643b3be5bf64; ' \
-           'JSESSIONID=D05886DA8DE683BFB820372490C9A8CD; '
+    s = requests.session()
+    s.get(url='https://kyfw.12306.cn/otn/leftTicket/init')
+    cookie_jar = requests.utils.dict_from_cookiejar(s.cookies)
+    result = ''
+    for k, v in cookie_jar.items():
+        result += '{}={}; '.format(k, v)
+    return result
 
 
 def raw_schedule(d_train_info):
@@ -47,8 +51,7 @@ def raw_schedule(d_train_info):
                              'leftTicketDTO.from_station': d_train_info['from_station'],
                              'leftTicketDTO.to_station': d_train_info['to_station'],
                              'purpose_codes': 'ADULT'},
-                     headers={
-                         'Cookie': schedule_cookie()})
+                     headers={'Cookie': schedule_cookie()})
     r.encoding = 'utf-8'
     result = json.loads(r.text)
 
