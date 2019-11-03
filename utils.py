@@ -121,7 +121,7 @@ def train_schedule(d_train_info):
                                             {
                                                 'hours': int(l_train[10].split(':')[0]),
                                                 'minutes': int(l_train[10].split(':')[1]),
-                                             },
+                                            },
                                             '%Y-%m-%d %H:%M:%S')
         result.append({
             'number': l_train[3],
