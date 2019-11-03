@@ -113,11 +113,20 @@ def train_schedule(d_train_info):
             # skip error time record
             continue
 
+        # 出发时间必定在出发天，所以直接拼接即可
         train_start_time = d_train_info['train_date'] + ' ' + l_train[8] + ':00'
+        # 到达时间可能在出发天的 23: 59 之后，所以不能直接拼接，要计算 "出发时间+行驶时间" 来获得
+        train_end_time = jst.add_time_delta(train_start_time,
+                                            '%Y-%m-%d %H:%M:%S',
+                                            {
+                                                'hours': int(l_train[10].split(':')[0]),
+                                                'minutes': int(l_train[10].split(':')[1]),
+                                             },
+                                            '%Y-%m-%d %H:%M:%S')
         result.append({
             'number': l_train[3],
             'start_time': train_start_time,
-            'end_time': d_train_info['train_date'] + ' ' + l_train[9] + ':00',
+            'end_time': train_end_time,
             'cost_time': __train_take_hours(l_train) * 60 + __train_take_minutes(l_train),
             'is_depart_from_first_station': l_train[4] == l_train[6],
         })
