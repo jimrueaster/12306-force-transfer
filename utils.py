@@ -113,9 +113,10 @@ def train_schedule(d_train_info):
             # skip error time record
             continue
 
+        train_start_time = d_train_info['train_date'] + ' ' + l_train[8] + ':00'
         result.append({
             'number': l_train[3],
-            'start_time': d_train_info['train_date'] + ' ' + l_train[8] + ':00',
+            'start_time': train_start_time,
             'end_time': d_train_info['train_date'] + ' ' + l_train[9] + ':00',
             'cost_time': __train_take_hours(l_train) * 60 + __train_take_minutes(l_train),
             'is_depart_from_first_station': l_train[4] == l_train[6],
